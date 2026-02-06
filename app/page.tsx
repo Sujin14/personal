@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Loader from '@/components/features/Loader';
 import Navigation from '@/components/features/Navigation';
-import AudioController from '@/components/features/AudioController';
 import ValentineCursorEffects from '@/components/features/ValentineCursorEffects';
 import { CHAPTERS } from '@/lib/constants/storyData';
 // Import all chapters explicitly
@@ -78,7 +77,6 @@ export default function Home() {
   return (
     <main className="relative h-screen overflow-hidden bg-gradient-to-br from-rose-soft via-lavender to-blush">
       <ValentineCursorEffects />
-      <AudioController />
       <Navigation
         totalChapters={CHAPTERS.length}
         activeChapter={activeChapter}

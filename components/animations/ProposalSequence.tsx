@@ -1,25 +1,88 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+
+const ACCEPTANCE_AUDIO = '/audio/acceptance.mp3';
+const REJECT_AUDIO = '/audio/kannukulla.mp3';
+const THINK_AUDIO = '/audio/ninakku.mp3';
 
 type ResponseChoice = null | 'accept' | 'reject' | 'think';
 
 interface ProposalSequenceProps {
     /** When false, the "Click to respond" button is disabled until the narration has finished. Default true. */
     ready?: boolean;
+    /** Called when user selects an option (e.g. to pause chapter background music). */
+    onResponseOpen?: () => void;
+    /** Called when user closes the response (e.g. to resume chapter background music). */
+    onResponseClose?: () => void;
 }
 
-export default function ProposalSequence({ ready = true }: ProposalSequenceProps) {
+export default function ProposalSequence({ ready = true, onResponseOpen, onResponseClose }: ProposalSequenceProps) {
     const [showOptions, setShowOptions] = useState(false);
     const [chosen, setChosen] = useState<ResponseChoice>(null);
+    const acceptanceAudioRef = useRef<HTMLAudioElement | null>(null);
+    const rejectAudioRef = useRef<HTMLAudioElement | null>(null);
+    const thinkAudioRef = useRef<HTMLAudioElement | null>(null);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            acceptanceAudioRef.current = new Audio(ACCEPTANCE_AUDIO);
+            rejectAudioRef.current = new Audio(REJECT_AUDIO);
+            thinkAudioRef.current = new Audio(THINK_AUDIO);
+            return () => {
+                acceptanceAudioRef.current?.pause();
+                acceptanceAudioRef.current = null;
+                rejectAudioRef.current?.pause();
+                rejectAudioRef.current = null;
+                thinkAudioRef.current?.pause();
+                thinkAudioRef.current = null;
+            };
+        }
+    }, []);
 
     const handleChoice = (choice: ResponseChoice) => {
+        onResponseOpen?.();
+        if (choice === 'accept' && acceptanceAudioRef.current) {
+            rejectAudioRef.current?.pause();
+            rejectAudioRef.current && (rejectAudioRef.current.currentTime = 0);
+            thinkAudioRef.current?.pause();
+            thinkAudioRef.current && (thinkAudioRef.current.currentTime = 0);
+            acceptanceAudioRef.current.volume = 1;
+            acceptanceAudioRef.current.play().catch(() => {});
+        }
+        if (choice === 'reject' && rejectAudioRef.current) {
+            acceptanceAudioRef.current?.pause();
+            acceptanceAudioRef.current && (acceptanceAudioRef.current.currentTime = 0);
+            thinkAudioRef.current?.pause();
+            thinkAudioRef.current && (thinkAudioRef.current.currentTime = 0);
+            rejectAudioRef.current.volume = 1;
+            rejectAudioRef.current.play().catch(() => {});
+        }
+        if (choice === 'think' && thinkAudioRef.current) {
+            acceptanceAudioRef.current?.pause();
+            acceptanceAudioRef.current && (acceptanceAudioRef.current.currentTime = 0);
+            rejectAudioRef.current?.pause();
+            rejectAudioRef.current && (rejectAudioRef.current.currentTime = 0);
+            thinkAudioRef.current.volume = 1;
+            thinkAudioRef.current.play().catch(() => {});
+        }
         setChosen(choice);
     };
 
+    const handleClose = () => {
+        acceptanceAudioRef.current?.pause();
+        acceptanceAudioRef.current && (acceptanceAudioRef.current.currentTime = 0);
+        rejectAudioRef.current?.pause();
+        rejectAudioRef.current && (rejectAudioRef.current.currentTime = 0);
+        thinkAudioRef.current?.pause();
+        thinkAudioRef.current && (thinkAudioRef.current.currentTime = 0);
+        onResponseClose?.();
+        setChosen(null);
+    };
+
     return (
-        <div className="mt-2 shrink-0 w-full max-w-md mx-auto">
+        <div className="mt-2 shrink-0 w-full max-w-md mx-auto" data-proposal-sequence>
             {!showOptions ? (
                 <motion.button
                     onClick={ready ? () => setShowOptions(true) : undefined}
@@ -69,7 +132,7 @@ export default function ProposalSequence({ ready = true }: ProposalSequenceProps
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.98 }}
                         >
-                            I&apos;m sorry, I can&apos;t
+                            I&apos;m sorry, I can&apos;t 😢
                         </motion.button>
                     </div>
                 </motion.div>
@@ -91,9 +154,11 @@ export default function ProposalSequence({ ready = true }: ProposalSequenceProps
                                     className="mb-3"
                                 >
                                     <img
-                                        src="/images/dairymilk-silk.jpg"
+                                        src="/images/chapters/dairymilk.webp"
                                         alt="Dairy Milk Silk"
-                                        className="mx-auto rounded-lg shadow-md max-h-32 object-contain"
+                                        width={200}
+                                        height={128}
+                                        className="mx-auto rounded-lg shadow-md max-h-32 w-auto h-auto object-contain"
                                     />
                                 </motion.div>
                                 <p className="text-sm font-lato text-gray-800 mb-2">
@@ -112,6 +177,7 @@ export default function ProposalSequence({ ready = true }: ProposalSequenceProps
                         )}
                         {chosen === 'reject' && (
                             <>
+                                <p className="text-2xl mb-2" aria-hidden>😢</p>
                                 <p className="text-sm font-lato text-gray-700 mb-2">
                                     I understand. Thank you for being honest.
                                 </p>
@@ -123,6 +189,9 @@ export default function ProposalSequence({ ready = true }: ProposalSequenceProps
                                 </p>
                                 <p className="text-xs text-gray-500 mt-2">
                                     You&apos;ll always be special to me. — Sujin
+                                </p>
+                                <p className="text-sm font-lato text-gray-600 italic mt-3">
+                                    The waiting never ends...
                                 </p>
                             </>
                         )}
@@ -164,6 +233,16 @@ export default function ProposalSequence({ ready = true }: ProposalSequenceProps
                                 </motion.span>
                             ))}
                         </div>
+
+                        <motion.button
+                            type="button"
+                            onClick={handleClose}
+                            className="mt-4 px-4 py-2 text-sm font-lato rounded-lg bg-gray-200/80 text-gray-700 hover:bg-gray-300 transition-colors"
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                        >
+                            Close
+                        </motion.button>
                     </motion.div>
                 </AnimatePresence>
             )}

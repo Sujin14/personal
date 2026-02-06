@@ -21,8 +21,8 @@ const dancing = Dancing_Script({
 });
 
 export const metadata: Metadata = {
-  title: "Cupid's Heart - A 13 Year Love Story",
-  description: "A journey through 13 years of love, from cupid's birth to a heartfelt proposal",
+  title: "A Boy's Heart - A 13 Year Love Story",
+  description: "A journey through 13 years of love, from a boy's birth to a heartfelt proposal",
 };
 
 export default function RootLayout({

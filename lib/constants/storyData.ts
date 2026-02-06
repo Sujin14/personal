@@ -15,8 +15,8 @@ export interface Chapter {
 export const CHAPTERS: Chapter[] = [
     {
         id: 1,
-        title: "The Birth of a Cupid",
-        narration: "On February 14, 2002, a cupid was born... but his heart remained locked, waiting for the one who held the key.",
+        title: "The Birth of a Boy",
+        narration: "On February 14, 2002, a boy was born... but his heart remained locked, waiting for the one who held the key.",
         image: "/images/chapters/baby.jpeg",
         colorTheme: { primary: "baby-blue", secondary: "light-yellow", accent: "rose-soft" }
     },
@@ -30,7 +30,7 @@ export const CHAPTERS: Chapter[] = [
     {
         id: 3,
         title: "The Arrival",
-        narration: "And then one day in 5th standard, the classroom door opened... A new student walked in. In that moment, the cupid felt something he'd never felt before—the key appeared, glowing softly in her presence.",
+        narration: "And then one day in 5th standard, the classroom door opened... A new student walked in. In that moment, the boy felt something he'd never felt before—the key appeared, glowing softly in her presence.",
         image: "/images/chapters/childyamuna.jpeg",
         colorTheme: { primary: "sky-blue", secondary: "sunny-yellow", accent: "gold-sparkle" }
     },
@@ -115,7 +115,7 @@ export const CHAPTERS: Chapter[] = [
     {
         id: 14,
         title: "Will You Be My Valentine?",
-        narration: `Thirteen years ago, a cupid's heart found its key.
+        narration: `Thirteen years ago, a boy's heart found its key.
 Through childhood smiles and teenage fears,
 Through silent years and distant tears,
 Through every moment, far or near,
