@@ -1,65 +1,110 @@
-import Image from "next/image";
+'use client';
+
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import Loader from '@/components/features/Loader';
+import Navigation from '@/components/features/Navigation';
+import AudioController from '@/components/features/AudioController';
+import ValentineCursorEffects from '@/components/features/ValentineCursorEffects';
+import { CHAPTERS } from '@/lib/constants/storyData';
+// Import all chapters explicitly
+import Chapter01 from '@/components/chapters/Chapter01';
+import Chapter02 from '@/components/chapters/Chapter02';
+import Chapter03 from '@/components/chapters/Chapter03';
+import Chapter04 from '@/components/chapters/Chapter04';
+import Chapter05 from '@/components/chapters/Chapter05';
+import Chapter06 from '@/components/chapters/Chapter06';
+import Chapter07 from '@/components/chapters/Chapter07';
+import Chapter08 from '@/components/chapters/Chapter08';
+import Chapter09 from '@/components/chapters/Chapter09';
+import Chapter10 from '@/components/chapters/Chapter10';
+import Chapter11 from '@/components/chapters/Chapter11';
+import Chapter12 from '@/components/chapters/Chapter12';
+import Chapter13 from '@/components/chapters/Chapter13';
+import Chapter14 from '@/components/chapters/Chapter14';
+
+const CurrentChapterComponent = ({ index }: { index: number }) => {
+  switch (index) {
+    case 0: return <Chapter01 />;
+    case 1: return <Chapter02 />;
+    case 2: return <Chapter03 />;
+    case 3: return <Chapter04 />;
+    case 4: return <Chapter05 />;
+    case 5: return <Chapter06 />;
+    case 6: return <Chapter07 />;
+    case 7: return <Chapter08 />;
+    case 8: return <Chapter09 />;
+    case 9: return <Chapter10 />;
+    case 10: return <Chapter11 />;
+    case 11: return <Chapter12 />;
+    case 12: return <Chapter13 />;
+    case 13: return <Chapter14 />;
+    default: return <Chapter01 />;
+  }
+};
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [activeChapter, setActiveChapter] = useState(0);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+        if (activeChapter < CHAPTERS.length - 1) {
+          e.preventDefault();
+          setActiveChapter((prev) => prev + 1);
+        }
+      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+        if (activeChapter > 0) {
+          e.preventDefault();
+          setActiveChapter((prev) => prev - 1);
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [activeChapter]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main className="relative h-screen overflow-hidden bg-gradient-to-br from-rose-soft via-lavender to-blush">
+      <ValentineCursorEffects />
+      <AudioController />
+      <Navigation
+        totalChapters={CHAPTERS.length}
+        activeChapter={activeChapter}
+        onNavigate={setActiveChapter}
+      />
+
+      <div className="relative z-10 h-full">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeChapter}
+            className="h-full"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <CurrentChapterComponent index={activeChapter} />
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {activeChapter < CHAPTERS.length - 1 && (
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 text-rose-deep/90 text-sm animate-bounce">
+          ↓ Next: arrow key or dot
         </div>
-      </main>
-    </div>
+      )}
+    </main>
   );
 }

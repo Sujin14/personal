@@ -1,0 +1,160 @@
+'use client';
+
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+
+type ResponseChoice = null | 'accept' | 'reject' | 'think';
+
+interface ProposalSequenceProps {
+    /** When false, the "Click to respond" button is disabled until the narration has finished. Default true. */
+    ready?: boolean;
+}
+
+export default function ProposalSequence({ ready = true }: ProposalSequenceProps) {
+    const [showOptions, setShowOptions] = useState(false);
+    const [chosen, setChosen] = useState<ResponseChoice>(null);
+
+    const handleChoice = (choice: ResponseChoice) => {
+        setChosen(choice);
+    };
+
+    return (
+        <div className="mt-2 shrink-0 w-full max-w-md mx-auto">
+            {!showOptions ? (
+                <motion.button
+                    onClick={ready ? () => setShowOptions(true) : undefined}
+                    disabled={!ready}
+                    className={`px-6 py-2 text-sm font-lato rounded-full mx-auto block transition-colors ${
+                        ready
+                            ? 'bg-rose-deep text-white shadow-lg hover:bg-rose-deep/90 cursor-pointer'
+                            : 'bg-gray-300 text-gray-500 shadow cursor-not-allowed'
+                    }`}
+                    whileHover={ready ? { scale: 1.05 } : undefined}
+                    whileTap={ready ? { scale: 0.95 } : undefined}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                >
+                    {ready ? 'Click to respond ♡' : 'Read the message above first...'}
+                </motion.button>
+            ) : !chosen ? (
+                <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-center space-y-3"
+                >
+                    <p className="text-sm font-lato text-gray-700 mb-3">
+                        Whatever your answer, you&apos;ll always be my person. Choose one:
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-2 justify-center flex-wrap">
+                        <motion.button
+                            onClick={() => handleChoice('accept')}
+                            className="px-4 py-2.5 rounded-xl bg-rose-deep/90 text-white text-sm font-lato shadow-md hover:bg-rose-deep transition-colors border border-rose-deep/50"
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.98 }}
+                        >
+                            Yes! I accept 💕
+                        </motion.button>
+                        <motion.button
+                            onClick={() => handleChoice('think')}
+                            className="px-4 py-2.5 rounded-xl bg-lavender/80 text-gray-800 text-sm font-lato shadow-md hover:bg-lavender transition-colors border border-gray-300/50"
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.98 }}
+                        >
+                            I need time to think 🌸
+                        </motion.button>
+                        <motion.button
+                            onClick={() => handleChoice('reject')}
+                            className="px-4 py-2.5 rounded-xl bg-white/80 text-gray-700 text-sm font-lato shadow-md hover:bg-gray-100 transition-colors border border-gray-300/50"
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.98 }}
+                        >
+                            I&apos;m sorry, I can&apos;t
+                        </motion.button>
+                    </div>
+                </motion.div>
+            ) : (
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={chosen}
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                        className="text-center rounded-xl border-2 border-rose-deep/30 bg-white/50 px-4 py-3 shadow-inner"
+                    >
+                        {chosen === 'accept' && (
+                            <>
+                                <p className="text-sm font-lato text-gray-800 mb-2">
+                                    Thank you for saying yes! 💝
+                                </p>
+                                <p className="text-xs font-lato text-gray-600 mb-1">
+                                    Text me on WhatsApp with this message:
+                                </p>
+                                <p className="text-sm font-playfair text-rose-deep font-semibold italic">
+                                    &ldquo;I want to be your lifetime Valentine&rdquo;
+                                </p>
+                                <p className="text-xs text-gray-500 mt-2">
+                                    I&apos;ll be waiting. Forever yours, Sujin.
+                                </p>
+                            </>
+                        )}
+                        {chosen === 'reject' && (
+                            <>
+                                <p className="text-sm font-lato text-gray-700 mb-2">
+                                    I understand. Thank you for being honest.
+                                </p>
+                                <p className="text-xs font-lato text-gray-600 mb-1">
+                                    If you&apos;d like to reply, you can text on WhatsApp:
+                                </p>
+                                <p className="text-sm font-lato text-gray-700 italic">
+                                    &ldquo;Sorry, I can&apos;t&rdquo;
+                                </p>
+                                <p className="text-xs text-gray-500 mt-2">
+                                    You&apos;ll always be special to me. — Sujin
+                                </p>
+                            </>
+                        )}
+                        {chosen === 'think' && (
+                            <>
+                                <p className="text-sm font-lato text-gray-700 mb-2">
+                                    I&apos;m glad you&apos;re considering it. Take all the time you need.
+                                </p>
+                                <p className="text-xs font-lato text-gray-600 mb-1">
+                                    When you feel ready, text me on WhatsApp:
+                                </p>
+                                <p className="text-sm font-playfair text-rose-deep/90 italic">
+                                    &ldquo;There is a chance we can look&rdquo;
+                                </p>
+                                <p className="text-xs text-gray-500 mt-2">
+                                    I&apos;ll wait for you. — Sujin
+                                </p>
+                            </>
+                        )}
+
+                        <div className="relative h-16 mt-3 overflow-hidden">
+                            {Array.from({ length: 12 }).map((_, i) => (
+                                <motion.span
+                                    key={i}
+                                    className="absolute text-lg"
+                                    style={{ left: `${10 + i * 8}%`, top: 0 }}
+                                    animate={{
+                                        y: 64,
+                                        rotate: Math.random() * 360,
+                                        opacity: 0,
+                                    }}
+                                    transition={{
+                                        duration: 2 + Math.random(),
+                                        delay: Math.random() * 0.3,
+                                        ease: 'easeOut',
+                                    }}
+                                >
+                                    🌹
+                                </motion.span>
+                            ))}
+                        </div>
+                    </motion.div>
+                </AnimatePresence>
+            )}
+        </div>
+    );
+}
