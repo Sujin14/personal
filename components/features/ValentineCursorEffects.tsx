@@ -48,9 +48,9 @@ export default function ValentineCursorEffects() {
           y: clientY + (Math.random() * 24 - 12),
           symbol: VALENTINE_SYMBOLS[Math.floor(Math.random() * VALENTINE_SYMBOLS.length)],
           color: COLORS[Math.floor(Math.random() * COLORS.length)],
-          size: 14 + Math.random() * 10,
-          driftX: (Math.random() - 0.5) * 40,
-          floatY: -36 - Math.random() * 16,
+          size: 6 + Math.random() * 5,
+          driftX: (Math.random() - 0.5) * 24,
+          floatY: -24 - Math.random() * 10,
           duration: 1.2 + Math.random() * 0.8,
         },
       ];

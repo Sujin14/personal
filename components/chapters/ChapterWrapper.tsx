@@ -53,7 +53,7 @@ const ChapterWrapper = forwardRef<HTMLDivElement, ChapterWrapperProps>(({
                     <img
                         src={image}
                         alt={title}
-                        className="w-full h-full object-cover object-center"
+                        className="w-full h-full object-contain object-center"
                     />
                 </motion.div>
 

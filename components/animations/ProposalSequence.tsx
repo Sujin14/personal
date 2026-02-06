@@ -84,6 +84,18 @@ export default function ProposalSequence({ ready = true }: ProposalSequenceProps
                     >
                         {chosen === 'accept' && (
                             <>
+                                <motion.div
+                                    initial={{ scale: 0.8, opacity: 0 }}
+                                    animate={{ scale: 1, opacity: 1 }}
+                                    transition={{ duration: 0.5 }}
+                                    className="mb-3"
+                                >
+                                    <img
+                                        src="/images/dairymilk-silk.jpg"
+                                        alt="Dairy Milk Silk"
+                                        className="mx-auto rounded-lg shadow-md max-h-32 object-contain"
+                                    />
+                                </motion.div>
                                 <p className="text-sm font-lato text-gray-800 mb-2">
                                     Thank you for saying yes! 💝
                                 </p>
