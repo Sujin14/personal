@@ -61,7 +61,7 @@ export const CHAPTERS: Chapter[] = [
     {
         id: 7,
         title: "The Revelation & Retreat",
-        narration: "6th standard arrived. After a fight with a friend, Devu went to Yamuna and told her everything. She looked at him. World War III erupted in his mind—would she tell the teachers? His parents? But she did nothing. Yet fear consumed him. From that day, he ran away whenever he saw her. The heart, though unlocked, remained hidden.",
+        narration: "6th standard arrived. After a fight with a friend (devu), she  went to Yamuna and told her everything. She looked at him. World War III erupted in his mind—would she tell the teachers? His parents? But she did nothing. Yet fear consumed him. From that day, he ran away whenever he saw her. The heart, though unlocked, remained hidden.",
         image: "/images/chapters/chapter7.jpeg",
         colorTheme: { primary: "dusty-blue", secondary: "gray-lavender", accent: "charcoal" },
         specialAnimation: "eyeContact"
@@ -101,14 +101,14 @@ export const CHAPTERS: Chapter[] = [
     {
         id: 12,
         title: "The Instagram Era & Realization",
-        narration: "During his 2nd year of B.Tech, he found her on Instagram. They texted. Barriers fell. He could talk to her without fear. He told her about his love—multiple times. She mentioned age, caste, family concerns. But he knew one truth: He wasn't 'loving' her. If it were just love, he could love someone else. But for him, she IS love. If she goes, love itself goes with her.",
+        narration: "During his 2nd year of B.Tech, he found her on Instagram. They texted. Barriers fell. He could talk to her without fear. He told her about his love—multiple times. She mentioned age, caste, family concerns. But he knew one truth: He wasn't 'loving' her. If it were just love, he could love someone else. But for him, she is love. If she goes, love itself goes with her.",
         image: "/images/chapters/chatting.jpeg",
         colorTheme: { primary: "coral", secondary: "soft-orange", accent: "rose-deep" }
     },
     {
         id: 13,
         title: "The Transformation",
-        narration: "Years passed. He transformed—from an obese child to a fit man, from a student to a mobile application developer with a good job. She became an assistant professor in nursing. But one thing never changed: the love in his heart. 13 years. Through silence and distance, through fear and hope—she remained.",
+        narration: "Years passed. He transformed—from a student to a mobile application developer. She became an assistant professor in nursing. But one thing never changed: the love in his heart. 13 years. Through silence and distance, through fear and hope—she remained.",
         image: "/images/chapters/chapter13.jpeg",
         colorTheme: { primary: "rose-deep", secondary: "lavender", accent: "gold-sparkle" }
     },

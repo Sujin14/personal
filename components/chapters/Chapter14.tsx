@@ -165,8 +165,12 @@ const Chapter14 = forwardRef<HTMLDivElement, any>((props, ref) => {
                 <ProposalSequence
                     ready={narrationComplete}
                     onResponseOpen={() => kadalolamRef.current?.pause()}
-                    onResponseClose={() => kadalolamRef.current?.play().catch(() => {})}
+                    onResponseClose={() => {
+                        setShowChapter14Image(false);
+                        kadalolamRef.current?.play().catch(() => {});
+                    }}
                     onAccept={() => setShowChapter14Image(true)}
+                    onBack={() => setShowChapter14Image(false)}
                 />
 
                 <div className="mt-2 text-gray-600 text-xs shrink-0">
