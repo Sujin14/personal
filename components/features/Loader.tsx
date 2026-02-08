@@ -12,8 +12,8 @@ export default function Loader() {
         >
             <motion.div
                 animate={{ y: [0, -12, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                className="mb-6"
+                transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+                className="mb-8"
             >
                 <div className="w-28 h-28 flex items-center justify-center">
                     <svg width="100" height="100" viewBox="0 0 24 24" fill="none" className="drop-shadow-lg">
@@ -25,41 +25,28 @@ export default function Loader() {
                 </div>
             </motion.div>
 
-            <motion.h2
-                className="text-xl md:text-2xl font-playfair text-gray-800 text-center max-w-md mb-2"
+            <motion.div
+                className="text-center max-w-md space-y-4"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.6 }}
+                transition={{ delay: 1, duration: 1 }}
             >
-                A love story in 14 chapters
-            </motion.h2>
+                <p className="text-base md:text-lg font-lato text-gray-800 leading-relaxed">
+                    Hi, please view this with <strong>headphones</strong> and try to understand the emotions in it.
+                </p>
+                <p className="text-sm md:text-base font-lato text-gray-700 leading-relaxed">
+                    Take your time to read each page with your heart.
+                </p>
+            </motion.div>
 
-            <motion.p
-                className="text-sm md:text-base font-lato text-gray-700 text-center max-w-sm mb-6"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7, duration: 0.5 }}
-            >
-                Every chapter matters. Stay till the last — there&apos;s something waiting for you there.
-            </motion.p>
-
-            <div className="w-56 h-1.5 bg-white/40 rounded-full overflow-hidden mb-4">
+            <div className="w-56 h-1.5 bg-white/40 rounded-full overflow-hidden mt-8 mb-2">
                 <motion.div
                     className="h-full bg-rose-deep"
                     initial={{ width: 0 }}
                     animate={{ width: '100%' }}
-                    transition={{ duration: 2.2, ease: 'easeInOut' }}
+                    transition={{ duration: 3.5, ease: 'easeInOut' }}
                 />
             </div>
-
-            <motion.p
-                className="text-gray-600 text-xs font-lato"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.2 }}
-            >
-                Preparing something special...
-            </motion.p>
         </motion.div>
     );
 }

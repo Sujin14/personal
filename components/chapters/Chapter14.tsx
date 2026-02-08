@@ -55,11 +55,14 @@ function FallingValentineLine({ className }: { className?: string }) {
 /** Same Valentine theme as all other chapters */
 const VALENTINE_GRADIENT = 'linear-gradient(135deg, #FFB6C1 0%, #E6E6FA 50%, #FFC0CB 100%)';
 
+const CHAPTER_14_IMAGE = '/images/chapters/chapter14.jpeg';
+
 const Chapter14 = forwardRef<HTMLDivElement, any>((props, ref) => {
     const chapter = CHAPTERS[13];
     const style = props['style'] as any;
     const externalClassName = props['className'] as any;
     const [narrationComplete, setNarrationComplete] = useState(false);
+    const [showChapter14Image, setShowChapter14Image] = useState(false);
     const completedRef = useRef(false);
     const kadalolamRef = useRef<HTMLAudioElement | null>(null);
 
@@ -108,7 +111,22 @@ const Chapter14 = forwardRef<HTMLDivElement, any>((props, ref) => {
             )}
             style={{ ...style, background: VALENTINE_GRADIENT }}
         >
-            <div className="max-w-xl w-full flex flex-col items-center gap-3 flex-1 min-h-0 py-2">
+            {showChapter14Image && (
+                <motion.div
+                    className="absolute inset-0 z-0"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.6, ease: 'easeOut' }}
+                    aria-hidden
+                    style={{
+                        backgroundImage: `url(${CHAPTER_14_IMAGE})`,
+                        backgroundSize: '100% auto',
+                        backgroundPosition: 'center top',
+                        backgroundRepeat: 'no-repeat',
+                    }}
+                />
+            )}
+            <div className="relative z-10 max-w-xl w-full flex flex-col items-center gap-3 flex-1 min-h-0 py-2">
                 <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{
@@ -148,6 +166,7 @@ const Chapter14 = forwardRef<HTMLDivElement, any>((props, ref) => {
                     ready={narrationComplete}
                     onResponseOpen={() => kadalolamRef.current?.pause()}
                     onResponseClose={() => kadalolamRef.current?.play().catch(() => {})}
+                    onAccept={() => setShowChapter14Image(true)}
                 />
 
                 <div className="mt-2 text-gray-600 text-xs shrink-0">

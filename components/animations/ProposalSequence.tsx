@@ -16,9 +16,13 @@ interface ProposalSequenceProps {
     onResponseOpen?: () => void;
     /** Called when user closes the response (e.g. to resume chapter background music). */
     onResponseClose?: () => void;
+    /** Called when user clicks "Yes! I accept" (e.g. to show chapter 14 image). */
+    onAccept?: () => void;
+    /** Called when user clicks Back from the three-options screen (e.g. to hide chapter 14 image). */
+    onBack?: () => void;
 }
 
-export default function ProposalSequence({ ready = true, onResponseOpen, onResponseClose }: ProposalSequenceProps) {
+export default function ProposalSequence({ ready = true, onResponseOpen, onResponseClose, onAccept, onBack }: ProposalSequenceProps) {
     const [showOptions, setShowOptions] = useState(false);
     const [chosen, setChosen] = useState<ResponseChoice>(null);
     const acceptanceAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -43,13 +47,16 @@ export default function ProposalSequence({ ready = true, onResponseOpen, onRespo
 
     const handleChoice = (choice: ResponseChoice) => {
         onResponseOpen?.();
-        if (choice === 'accept' && acceptanceAudioRef.current) {
+        if (choice === 'accept') {
+            onAccept?.();
+            if (acceptanceAudioRef.current) {
             rejectAudioRef.current?.pause();
             rejectAudioRef.current && (rejectAudioRef.current.currentTime = 0);
             thinkAudioRef.current?.pause();
             thinkAudioRef.current && (thinkAudioRef.current.currentTime = 0);
             acceptanceAudioRef.current.volume = 1;
             acceptanceAudioRef.current.play().catch(() => {});
+            }
         }
         if (choice === 'reject' && rejectAudioRef.current) {
             acceptanceAudioRef.current?.pause();
@@ -106,6 +113,18 @@ export default function ProposalSequence({ ready = true, onResponseOpen, onRespo
                     animate={{ opacity: 1, y: 0 }}
                     className="text-center space-y-3"
                 >
+                    <motion.button
+                        type="button"
+                        onClick={() => {
+                            setShowOptions(false);
+                            onBack?.();
+                        }}
+                        className="mb-2 text-xs font-lato text-gray-600 hover:text-gray-800 underline transition-colors"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                    >
+                        ← Back
+                    </motion.button>
                     <p className="text-sm font-lato text-gray-700 mb-3">
                         Whatever your answer, you&apos;ll always be my person. Choose one:
                     </p>

@@ -1,11 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Loader from '@/components/features/Loader';
 import Navigation from '@/components/features/Navigation';
 import ValentineCursorEffects from '@/components/features/ValentineCursorEffects';
 import { CHAPTERS } from '@/lib/constants/storyData';
+
+const BUMBLINGA_URL = '/audio/bumblinga.mp3';
 // Import all chapters explicitly
 import Chapter01 from '@/components/chapters/Chapter01';
 import Chapter02 from '@/components/chapters/Chapter02';
@@ -45,11 +47,34 @@ const CurrentChapterComponent = ({ index }: { index: number }) => {
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [activeChapter, setActiveChapter] = useState(0);
+  const bumblingaRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 3000);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (isLoading || typeof window === 'undefined') return;
+    const audio = new Audio(BUMBLINGA_URL);
+    audio.loop = true;
+    audio.volume = 0.75;
+    bumblingaRef.current = audio;
+    return () => {
+      audio.pause();
+      audio.src = '';
+      bumblingaRef.current = null;
+    };
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (!bumblingaRef.current || isLoading) return;
+    if (activeChapter < CHAPTERS.length - 1) {
+      bumblingaRef.current.play().catch(() => {});
+    } else {
+      bumblingaRef.current.pause();
+    }
+  }, [isLoading, activeChapter]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -84,14 +109,14 @@ export default function Home() {
       />
 
       <div className="relative z-10 h-full">
-        <AnimatePresence mode="wait">
+        <AnimatePresence initial={false}>
           <motion.div
             key={activeChapter}
-            className="h-full"
+            className="absolute inset-0 h-full"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.4, ease: 'easeInOut' }}
           >
             <CurrentChapterComponent index={activeChapter} />
           </motion.div>
