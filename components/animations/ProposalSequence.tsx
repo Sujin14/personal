@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useRef, useEffect } from 'react';
 
 const ACCEPTANCE_AUDIO = '/audio/acceptance.mp3';
-const REJECT_AUDIO = '/audio/kannukulla.mp3';
+const REJECT_AUDIO = '/audio/Kannukulla.mp3';
 const THINK_AUDIO = '/audio/ninakku.mp3';
 
 type ResponseChoice = null | 'accept' | 'reject' | 'think';

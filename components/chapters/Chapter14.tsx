@@ -120,8 +120,8 @@ const Chapter14 = forwardRef<HTMLDivElement, any>((props, ref) => {
                     aria-hidden
                     style={{
                         backgroundImage: `url(${CHAPTER_14_IMAGE})`,
-                        backgroundSize: '100% auto',
-                        backgroundPosition: 'center top',
+                        backgroundSize: 'contain',
+                        backgroundPosition: 'center',
                         backgroundRepeat: 'no-repeat',
                     }}
                 />
