@@ -21,8 +21,18 @@ const dancing = Dancing_Script({
 });
 
 export const metadata: Metadata = {
-  title: "A Boy's Heart - A 13 Year Love Story",
-  description: "A journey through 13 years of love, from a boy's birth to a heartfelt proposal",
+  title: "Something for you",
+  description: "Open when you have a few minutes. Best with headphones—and an open heart.",
+  openGraph: {
+    title: "Something for you",
+    description: "Open when you have a few minutes. Best with headphones—and an open heart.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Something for you",
+    description: "Open when you have a few minutes. Best with headphones—and an open heart.",
+  },
 };
 
 export default function RootLayout({

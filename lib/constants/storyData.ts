@@ -85,7 +85,7 @@ export const CHAPTERS: Chapter[] = [
     {
         id: 10,
         title: "The Lost Years",
-        narration: "He lost all his friends. Computer science made him an extreme introvert. His comfort zone was gone. Cars and bikes became his love. He closed his heart completely, convinced love wasn't for him. For two years, he didn't think of relationships. When someone mentioned love, he thought of engines and wheels.",
+        narration: "He lost all his friends. He bacame an extreme introvert. His comfort zone was gone. Cars and bikes became his love. He closed his heart completely, convinced love wasn't for him. For two years, he didn't think of relationships. When someone mentioned love, he thought of engines and wheels.",
         image: "/images/chapters/chapter10.jpeg",
         colorTheme: { primary: "charcoal", secondary: "steel-gray", accent: "dusty-blue" }
     },
@@ -123,7 +123,7 @@ You've been the only one, crystal clear.
 
 I've told you before, I'll say again—
 This isn't just love that comes and goes.
-You ARE the love my heart knows.
+You are the love my heart knows.
 If you leave, love itself departs from me.
 
 I know the concerns that fill your mind,
@@ -131,6 +131,14 @@ Age, caste, family—the world's design.
 But I'm not asking you to decide today,
 I'm just asking you to hear what I say:
 
+MY intentions are very pure.
+I just want you to be genuinely happy and
+consistently make you feel that
+you're loved.
+I know I'm not perfect and I know
+I'm not the best person to be with you
+but trust me I'll do the best I can for you 
+and never give up on you
 I will wait.
 Whether it takes a day, a year, or forever,
 My heart has already made its choice.

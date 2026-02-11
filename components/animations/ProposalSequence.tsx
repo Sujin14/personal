@@ -198,7 +198,10 @@ export default function ProposalSequence({ ready = true, onResponseOpen, onRespo
                             <>
                                 <p className="text-2xl mb-2" aria-hidden>😢</p>
                                 <p className="text-sm font-lato text-gray-700 mb-2">
-                                    I understand. Thank you for being honest.
+                                    It hurts but it's okay because...
+                                    We can&apos;t force someone to feel
+                                    the same way as we feel for them.
+                                    -Thank you for being honest.
                                 </p>
                                 <p className="text-xs font-lato text-gray-600 mb-1">
                                     If you&apos;d like to reply, you can text on WhatsApp:
