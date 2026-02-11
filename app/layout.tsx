@@ -20,10 +20,14 @@ const dancing = Dancing_Script({
   weight: ["400", "700"],
 });
 
+const SITE_URL = "https://personalwork-ten.vercel.app";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Something for you",
   description: "Open when you have a few minutes. Best with headphones—and an open heart.",
   openGraph: {
+    url: SITE_URL,
     title: "Something for you",
     description: "Open when you have a few minutes. Best with headphones—and an open heart.",
     type: "website",
